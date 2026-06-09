@@ -1,16 +1,5 @@
 [
-  {
-    "id": "test-1.1",
-    "title": "Bài kiểm tra số 1 - Tổng quan Web",
-    "description": "Web, Website, URL, HTTP, HTTPS, Browser, Responsive",
-    "duration": 30,
-    "questionCount": 30
-  },
-  {
-    "id": "test-1.2",
-    "title": "Bài kiểm tra số 2 - HTML nhập môn",
-    "description": "HTML, Frontend, GitHub Pages",
-    "duration": 30,
-    "questionCount": 30
-  }
+  {"id":"test-1.1","title":"Bài kiểm tra số 1 - Tổng quan Web","description":"Web, Website, URL, HTTP, HTTPS, Browser, Responsive","duration":30,"questionCount":30}
+,
+  {"id":"test-1.2","title":"Bài kiểm tra số 2 - HTML nhập môn","description":"HTML, Frontend, GitHub Pages","duration":30,"questionCount":30}
 ]
