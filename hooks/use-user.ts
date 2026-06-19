@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { auth, isFirebaseConfigured, googleProvider, signInWithPopup } from "@/lib/firebase";
+import {
+  auth,
+  isFirebaseConfigured,
+  googleProvider,
+  signInWithRedirect,
+  getRedirectResult,
+} from "@/lib/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 const STORAGE_KEY = "exam_user_name";
@@ -29,6 +35,15 @@ export function useUser() {
       setIsLoggedIn(storedLoggedIn);
       setIsLoading(false);
     }
+  }, []);
+
+  // Handle redirect result (when returning from Google sign-in via redirect)
+  useEffect(() => {
+    if (!isFirebaseConfigured || !auth) return;
+
+    getRedirectResult(auth).catch((error) => {
+      console.error("Redirect sign-in error:", error);
+    });
   }, []);
 
   // Firebase Auth state observer (only active if Firebase is configured)
@@ -75,7 +90,8 @@ export function useUser() {
     setIsLoading(true);
     try {
       if (isFirebaseConfigured && auth && googleProvider) {
-        await signInWithPopup(auth, googleProvider);
+        await signInWithRedirect(auth, googleProvider);
+        // The page will redirect to Google, so we don't return here
         return true;
       } else {
         // Fallback Mock Google login
