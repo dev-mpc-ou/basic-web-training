@@ -1,0 +1,38 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String       @id @default(cuid())
+  email     String       @unique
+  name      String?
+  image     String?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  results   ExamResult[]
+}
+
+model ExamResult {
+  id             String   @id @default(cuid())
+  examId         String
+  examTitle      String
+  score          Int
+  correctCount   Int
+  totalQuestions Int
+  timeUsed       Int      // in seconds
+  duration       Int      // in minutes
+  createdAt      DateTime @default(now())
+
+  // Relation to User (optional, allows guest submissions)
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Snapshot details (supports guests and keeps a copy of their name/avatar at submission)
+  userName  String
+  userEmail String?
+  userImage String?
+}
